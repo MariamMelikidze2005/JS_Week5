@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Photo Table</title>
+</head>
+<body>
+
+    <form action="#" method="get">
+        <p>
+            <label for="columns">Columns:</label>
+            <input type="number" id="columns" name="columns" min="1" required />
+        </p>
+        <p>
+            <label for="rows">Rows:</label>
+            <input type="number" id="rows" name="rows" min="1" required />
+        </p>
+        <p>
+            <label for="amount">Amount of photos:</label>
+            <input type="number" id="amount" name="amount" min="1" required />
+        </p>
+        <button id="btn" type="button">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('btn').onclick = function() {
+            const columns = parseInt(document.getElementById("columns").value);
+            const rows = parseInt(document.getElementById("rows").value);
+            const amount = parseInt(document.getElementById("amount").value);
+
+            if (columns > 0 && rows > 0 && amount > 0) {
+                
+                task_18(columns, rows, amount);
+            } else {
+                alert("Please enter valid numbers for columns, rows, and amount.");
+            }
+        }
+
+        function selectRandomPhoto() {
+            const photos = [
+                '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
+                '6.png', '7.jpg', '8.jpg', '9.jpg', '10.jpg',
+                '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg',
+                '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'
+            ];
+            const randomIndex = Math.floor(Math.random() * photos.length);
+            return photos[randomIndex];
+        }
+
+        function displayRandomPhoto(tdElement) {
+            const photo = selectRandomPhoto();
+            const imgElement = document.createElement('img');
+            imgElement.src = "photos/" + photo;
+            imgElement.width = 300;
+            imgElement.style.margin = "10px";
+            tdElement.appendChild(imgElement);
+        }
+
+        function task_18(columns, rows, amount) {
+            const totalPhotos = columns * rows;
+            
+            const existingTable = document.getElementById("photoTable");
+            if (existingTable) {
+                existingTable.remove();
+            }
+
+            if (amount > totalPhotos) {
+                alert("Amount of photos exceeds table capacity.");
+                return;
+            }
+
+            let table = document.createElement("table");
+            table.id = "photoTable"; 
+            table.style.width = "50%";
+            table.style.border = "1px solid black";
+
+            let photosPlaced = 0;
+
+            for (let i = 0; i < rows; i++) {
+                let tr = document.createElement("tr");
+                for (let j = 0; j < columns; j++) {
+                    let td = document.createElement("td");
+                    td.style.border = "1px solid black";
+
+                    if (photosPlaced < amount) {
+                        displayRandomPhoto(td);
+                        photosPlaced++;
+                    }
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+
+            document.body.appendChild(table);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Photo and Day</title>
+</head>
+<body>
+    <div id="photosContainer"></div> 
+    <h2 id="day"></h2> 
+
+    <script>
+        function selectRandomPhoto() {
+            const photos = [
+                '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
+                '6.png', '7.jpg', '8.jpg', '9.jpg', '10.jpg',
+                '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg',
+                '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'
+            ];
+
+            
+            const randomIndex = Math.floor(Math.random() * photos.length);
+            return photos[randomIndex];
+        }
+
+        function task(){
+            return Math.floor(Math.random() * 7);
+        }
+
+        function displayRandomPhoto() {
+            const photo = selectRandomPhoto();
+            const photosContainer = document.getElementById('photosContainer');
+            
+            photosContainer.innerHTML = ''; 
+
+            
+            const imgElement = document.createElement('img');
+            imgElement.src = "photos/" + photo;
+            imgElement.width = 300;
+            imgElement.style.margin = "10px";
+            photosContainer.appendChild(imgElement);
+        }
+
+        function displayDay() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const randomDay = days[task()]; 
+            document.getElementById('day').textContent = "Today is: " + randomDay;
+        }
+
+       
+        displayDay();
+        displayRandomPhoto();
+    </script>
+</body>
+</html>
